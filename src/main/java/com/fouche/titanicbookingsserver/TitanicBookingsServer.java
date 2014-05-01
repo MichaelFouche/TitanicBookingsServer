@@ -86,7 +86,7 @@ public class TitanicBookingsServer
         txtConversation = new JTextArea(25,30);
         jpNorth.add(txtConversation);
         jf.add(jpNorth,BorderLayout.NORTH);
-        //jf.setSize(400,400);
+        jf.setSize(400,400);
         jf.pack();
         jf.setVisible(false);        
         jf.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //DISPOSE_ON_CLOSE,  DISPOSE_ON_CLOSE 
@@ -1025,11 +1025,12 @@ public class TitanicBookingsServer
     {
         // Create application
         TitanicBookingsServer server = new TitanicBookingsServer();
-        
+        System.out.println("Hello");
         // Start waiting for connections
         server.createDisplay();
+        System.out.print(" World");
         server.listen();
-        
+        System.out.print("!!");
         
     }   
     
