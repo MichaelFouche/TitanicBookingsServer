@@ -44,7 +44,7 @@ public class TitanicBookingsServer
     int amountAllFlightsCounted;
     String msg;
     String reply;
-    private String tableName;
+    //private String tableName;
     private String[] columnFlight = {"flightNumber", "flightDate", "departCity", "arriveCity", "seatsAvailable", "seatSold", "seatPrice", "cancelled"};
     private String[] columnTicket = {"ticketNumber", "flightNumber", "seatsBooked", "amountPaid", "passengerID"};
     private String[] columnReceipt = {"receiptID", "passengerID", "dateOfPayment", "amountPaid", "ticketNumber"};
@@ -136,19 +136,14 @@ public class TitanicBookingsServer
                 {
                     
                 }
-                else if(msg.equals("Load Flights"))
+                /*else if(msg.equals("Load Flights"))
                 {
                     receiveFlight();
                 }
                 else if(msg.equals("Load Tickets"))
                 {
                     receiveTicket();
-                }
-                else if(msg.equals("Create Tables"))
-                {
-                    tableName = (String)in.readObject();
-                    createTables(tableName);
-                }
+                }  */              
                 else if(msg.equals("Send All Flights"))
                 {
                     sendAllFlights();
@@ -216,7 +211,7 @@ public class TitanicBookingsServer
         try
         {
             
-            String select_seat="SELECT seatSold FROM "+tableName+"_Flight WHERE flightNumber = "+currentFlightNum+" ;";
+            String select_seat="SELECT seatSold FROM Flight WHERE flightNumber = "+currentFlightNum+" ;";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -246,7 +241,7 @@ public class TitanicBookingsServer
         {
             seatsBookedFlight -=seatsBookedTicket;
             int seatsAvail = 10-seatsBookedFlight;
-            String insert_Values_stmt="UPDATE "+tableName+"_Flight"+" SET seatSold = "+seatsBookedFlight+",seatsAvailable = "+seatsAvail+ " WHERE flightNumber = "+currentFlightNum+";";
+            String insert_Values_stmt="UPDATE Flight"+" SET seatSold = "+seatsBookedFlight+",seatsAvailable = "+seatsAvail+ " WHERE flightNumber = "+currentFlightNum+";";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -267,7 +262,7 @@ public class TitanicBookingsServer
         {
             System.out.println("UPDATE SEATS BOOKED (DELETE TICKET): " + err);
         }
-        String delete_Values_stmt="DELETE FROM "+tableName+"_Ticket"+" WHERE ticketNumber = "+ticketNumber+"; ";
+        String delete_Values_stmt="DELETE FROM Ticket"+" WHERE ticketNumber = "+ticketNumber+"; ";
         try 
         {           
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
@@ -304,7 +299,7 @@ public class TitanicBookingsServer
         try
         {
             
-            String select_seat="SELECT cancelled FROM "+tableName+"_Flight WHERE flightNumber = "+currentFlightNum+" ;";
+            String select_seat="SELECT cancelled FROM Flight WHERE flightNumber = "+currentFlightNum+" ;";
             
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
@@ -341,7 +336,7 @@ public class TitanicBookingsServer
         }
         try
         {            
-            String insert_Values_stmt="UPDATE "+tableName+"_Flight"+" SET cancelled = "+cancelledStatus+ " WHERE flightNumber = "+currentFlightNum+";";
+            String insert_Values_stmt="UPDATE Flight"+" SET cancelled = "+cancelledStatus+ " WHERE flightNumber = "+currentFlightNum+";";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -376,7 +371,7 @@ public class TitanicBookingsServer
         } 
         try 
         {   
-            String delete_Values_stmt="DELETE FROM "+tableName+"_Ticket"+" WHERE flightNumber = "+currentActiveFlightNum+"; ";
+            String delete_Values_stmt="DELETE FROM Ticket"+" WHERE flightNumber = "+currentActiveFlightNum+"; ";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -397,7 +392,7 @@ public class TitanicBookingsServer
         try
         {
            
-            String insert_Values_stmt="UPDATE "+tableName+"_Flight"+" SET seatSold = 0,seatsAvailable = 10 WHERE flightNumber = "+currentActiveFlightNum+";";
+            String insert_Values_stmt="UPDATE Flight"+" SET seatSold = 0,seatsAvailable = 10 WHERE flightNumber = "+currentActiveFlightNum+";";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -435,7 +430,7 @@ public class TitanicBookingsServer
        
         try 
         {   
-            String delete_Values_stmt="DELETE FROM "+tableName+"_Ticket"+" WHERE flightNumber = "+currentActiveFlightNum+"; ";
+            String delete_Values_stmt="DELETE FROM Ticket"+" WHERE flightNumber = "+currentActiveFlightNum+"; ";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -455,7 +450,7 @@ public class TitanicBookingsServer
         }
         try 
         {   
-            String delete_Values_stmt="DELETE FROM "+tableName+"_Flight"+" WHERE flightNumber = "+currentActiveFlightNum+"; ";
+            String delete_Values_stmt="DELETE FROM Flight"+" WHERE flightNumber = "+currentActiveFlightNum+"; ";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -481,7 +476,7 @@ public class TitanicBookingsServer
         try
         {
             
-            String select_largest_itemNum="SELECT MAX(flightNumber) FROM "+tableName+"_Flight"+" ;";                        
+            String select_largest_itemNum="SELECT MAX(flightNumber) FROM Flight"+" ;";                        
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -512,7 +507,7 @@ public class TitanicBookingsServer
             newflightNum+=50;
             //get flight num
             
-            String insert_Values_stmt="insert into "+tableName+"_Flight"+" values   ("+newflightNum+",'"+(String)in.readObject()+"','"+(String)in.readObject()+"','"+(String)in.readObject()+"', 10, 0, "+Double.parseDouble((String)in.readObject())+", 0)";
+            String insert_Values_stmt="insert into Flight"+" values   ("+newflightNum+",'"+(String)in.readObject()+"','"+(String)in.readObject()+"','"+(String)in.readObject()+"', 10, 0, "+Double.parseDouble((String)in.readObject())+", 0)";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -541,7 +536,7 @@ public class TitanicBookingsServer
         try
         {
             
-            String select_largest_itemNum="SELECT MAX(ticketNumber) FROM "+tableName+"_Ticket"+" ;";                        
+            String select_largest_itemNum="SELECT MAX(ticketNumber) FROM Ticket"+" ;";                        
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -580,7 +575,7 @@ public class TitanicBookingsServer
             String pSurname = (String)in.readObject();
             seatsBooking = Integer.parseInt((String)in.readObject());            
             
-            String insert_Values_stmt="insert into "+tableName+"_Ticket"+" values   ("+newTicketNum+",'"+flightNum+"', '"+pName+"', '"+pSurname+"', "+seatsBooking+", "+Double.parseDouble((String)in.readObject())+")";
+            String insert_Values_stmt="insert into Ticket"+" values   ("+newTicketNum+",'"+flightNum+"', '"+pName+"', '"+pSurname+"', "+seatsBooking+", "+Double.parseDouble((String)in.readObject())+")";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -604,7 +599,7 @@ public class TitanicBookingsServer
         try
         {
             
-            String select_seat="SELECT seatSold FROM "+tableName+"_Flight WHERE flightNumber = "+flightNum+" ;";
+            String select_seat="SELECT seatSold FROM Flight WHERE flightNumber = "+flightNum+" ;";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -635,7 +630,7 @@ public class TitanicBookingsServer
         {
             seatsBooked +=seatsBooking;
             int seatsAvail = 10-seatsBooked;
-            String insert_Values_stmt="UPDATE "+tableName+"_Flight"+" SET seatSold = "+seatsBooked+",seatsAvailable = "+seatsAvail+ " WHERE flightNumber = "+flightNum+";";
+            String insert_Values_stmt="UPDATE Flight"+" SET seatSold = "+seatsBooked+",seatsAvailable = "+seatsAvail+ " WHERE flightNumber = "+flightNum+";";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -674,7 +669,7 @@ public class TitanicBookingsServer
             int flightNumber = Integer.parseInt((String)in.readObject());
             int amountTicketsCounted = 0;
             //Get tickets from flight
-            String select_Flight_Table_stmt="SELECT ticketNumber,flightNumber, passengerName, passengerSurname, seatsBooked, amountPaid FROM "+tableName+"_Ticket"+" WHERE flightNumber = "+flightNumber+" ORDER BY passengerSurname;";
+            String select_Flight_Table_stmt="SELECT ticketNumber,flightNumber, passengerName, passengerSurname, seatsBooked, amountPaid FROM Ticket JOIN Passenger ON Ticket.passengerID = Passenger.passengerID"+" WHERE flightNumber = "+flightNumber+" ORDER BY passengerSurname;";
                         
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
@@ -688,18 +683,18 @@ public class TitanicBookingsServer
             if (rs != null) // if rs == null, then there is no ResultSet to view  
             {
                 
-                t = new Ticket[1000];
+                ticket = new Ticket[1000];
                 amountTicketsCounted = 0;
                 while (rs.next())
                 { 
-                    t[amountTicketsCounted] = null;
-                    t[amountTicketsCounted] = new Ticket();
-                    t[amountTicketsCounted].setTicketNumber(rs.getInt(1));
-                    t[amountTicketsCounted].setFlightNumber(rs.getInt(2));
-                    t[amountTicketsCounted].setPassengerName(rs.getString(3));
-                    t[amountTicketsCounted].setPassengerSurname(rs.getString(4));
-                    t[amountTicketsCounted].setSeatsBooked(rs.getInt(5));
-                    t[amountTicketsCounted].setAmountPaid(rs.getDouble(6));
+                    ticket[amountTicketsCounted] = null;
+                    ticket[amountTicketsCounted] = new Ticket();
+                    ticket[amountTicketsCounted].setTicketNumber(rs.getInt(1));
+                    ticket[amountTicketsCounted].setFlightNumber(rs.getInt(2));
+                    ticket[amountTicketsCounted].setPassengerName(rs.getString(3));
+                    ticket[amountTicketsCounted].setPassengerSurname(rs.getString(4));
+                    ticket[amountTicketsCounted].setSeatsBooked(rs.getInt(5));
+                    ticket[amountTicketsCounted].setAmountPaid(rs.getDouble(6));
                     amountTicketsCounted++;
                 }
             }
@@ -708,7 +703,7 @@ public class TitanicBookingsServer
             out.writeObject(amountTicketsCounted); 
             for(int i=0;i<amountTicketsCounted;i++)
             {
-                out.writeObject(t[i]);
+                out.writeObject(ticket[i]);
             }            
             out.flush();
             //out.writeObject("Sent Tickets requested");
@@ -728,7 +723,7 @@ public class TitanicBookingsServer
         try 
         {
             String cityToFilter = (String)in.readObject();
-            String select_Flight_Table_stmt="SELECT flightNumber,flightDate, departCity, arriveCity, seatsAvailable, seatSold, seatPrice, cancelled FROM "+tableName+"_Flight"+" WHERE departCity = '"+cityToFilter+"';";
+            String select_Flight_Table_stmt="SELECT flightNumber,flightDate, departCity, arriveCity, seatsAvailable, seatSold, seatPrice, cancelled FROM Flight"+" WHERE departCity = '"+cityToFilter+"';";
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
             String dbURL = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=";
             dbURL+= path;
@@ -740,20 +735,20 @@ public class TitanicBookingsServer
             ResultSet rs = s.getResultSet(); // get any ResultSet that came from our query
             if (rs != null) // if rs == null, then there is no ResultSet to view  
             {
-                f = new Flight[1000];
+                flight = new Flight[1000];
                 amountAllFlightsCounted = 0;
                 while (rs.next())
                 { 
-                    f[amountAllFlightsCounted] = null;
-                    f[amountAllFlightsCounted] = new Flight();
-                    f[amountAllFlightsCounted].setFlightNumber(rs.getInt(1));
-                    f[amountAllFlightsCounted].setFlightDate(rs.getString(2));
-                    f[amountAllFlightsCounted].setDepartCity(rs.getString(3));
-                    f[amountAllFlightsCounted].setArriveCity(rs.getString(4));
-                    f[amountAllFlightsCounted].setSeatsAvailable(rs.getInt(5));                    
-                    f[amountAllFlightsCounted].setSeatSold(rs.getInt(6));
-                    f[amountAllFlightsCounted].setSeatPrice(rs.getDouble(7));
-                    f[amountAllFlightsCounted].setCancelled(rs.getBoolean(8));
+                    flight[amountAllFlightsCounted] = null;
+                    flight[amountAllFlightsCounted] = new Flight();
+                    flight[amountAllFlightsCounted].setFlightNumber(rs.getInt(1));
+                    flight[amountAllFlightsCounted].setFlightDate(rs.getString(2));
+                    flight[amountAllFlightsCounted].setDepartCity(rs.getString(3));
+                    flight[amountAllFlightsCounted].setArriveCity(rs.getString(4));
+                    flight[amountAllFlightsCounted].setSeatsAvailable(rs.getInt(5));                    
+                    flight[amountAllFlightsCounted].setSeatSold(rs.getInt(6));
+                    flight[amountAllFlightsCounted].setSeatPrice(rs.getDouble(7));
+                    flight[amountAllFlightsCounted].setCancelled(rs.getBoolean(8));
                     amountAllFlightsCounted++;
                 }
             }
@@ -769,7 +764,7 @@ public class TitanicBookingsServer
             out.writeObject(amountAllFlightsCounted); 
             for(int i=0;i<amountAllFlightsCounted;i++)
             {
-                out.writeObject(f[i]);
+                out.writeObject(flight[i]);
             }            
             out.flush();
             //out.writeObject("Sent all Filtered Flights ("+amountAllFlightsCounted+")");
@@ -784,7 +779,7 @@ public class TitanicBookingsServer
     public void sendAllFlights()
     {
         //Read all Flights from database to Flight class
-        String select_Flight_Table_stmt="SELECT flightNumber,flightDate, departCity, arriveCity, seatsAvailable, seatSold, seatPrice, cancelled FROM "+tableName+"_Flight"+";";
+        String select_Flight_Table_stmt="SELECT flightNumber,flightDate, departCity, arriveCity, seatsAvailable, seatSold, seatPrice, cancelled FROM Flight"+";";
         try 
         {
             String path = new java.io.File("TitanicBookings.mdb").getAbsolutePath();
@@ -798,20 +793,20 @@ public class TitanicBookingsServer
             ResultSet rs = s.getResultSet(); // get any ResultSet that came from our query
             if (rs != null) // if rs == null, then there is no ResultSet to view  
             {
-                f = new Flight[1000];
+                flight = new Flight[1000];
                 amountAllFlightsCounted = 0;
                 while (rs.next())
                 { 
-                    f[amountAllFlightsCounted] = null;
-                    f[amountAllFlightsCounted] = new Flight();
-                    f[amountAllFlightsCounted].setFlightNumber(rs.getInt(1));
-                    f[amountAllFlightsCounted].setFlightDate(rs.getString(2));
-                    f[amountAllFlightsCounted].setDepartCity(rs.getString(3));
-                    f[amountAllFlightsCounted].setArriveCity(rs.getString(4));
-                    f[amountAllFlightsCounted].setSeatsAvailable(rs.getInt(5));                    
-                    f[amountAllFlightsCounted].setSeatSold(rs.getInt(6));
-                    f[amountAllFlightsCounted].setSeatPrice(rs.getDouble(7));
-                    f[amountAllFlightsCounted].setCancelled(rs.getBoolean(8));
+                    flight[amountAllFlightsCounted] = null;
+                    flight[amountAllFlightsCounted] = new Flight();
+                    flight[amountAllFlightsCounted].setFlightNumber(rs.getInt(1));
+                    flight[amountAllFlightsCounted].setFlightDate(rs.getString(2));
+                    flight[amountAllFlightsCounted].setDepartCity(rs.getString(3));
+                    flight[amountAllFlightsCounted].setArriveCity(rs.getString(4));
+                    flight[amountAllFlightsCounted].setSeatsAvailable(rs.getInt(5));                    
+                    flight[amountAllFlightsCounted].setSeatSold(rs.getInt(6));
+                    flight[amountAllFlightsCounted].setSeatPrice(rs.getDouble(7));
+                    flight[amountAllFlightsCounted].setCancelled(rs.getBoolean(8));
                     amountAllFlightsCounted++;
                 }
             }
@@ -828,7 +823,7 @@ public class TitanicBookingsServer
             out.writeObject(amountAllFlightsCounted); 
             for(int i=0;i<amountAllFlightsCounted;i++)
             {
-                out.writeObject(f[i]);
+                out.writeObject(flight[i]);
             }            
             out.flush();
             //out.writeObject("Sent all Flights ("+amountAllFlightsCounted+")");
@@ -844,7 +839,7 @@ public class TitanicBookingsServer
         //Report
     }
     
-    public void createTables(String tblName)
+    /*public void createTables(String tblName)
     {        
         String create_Flight_Table_stmt="CREATE TABLE "+tblName+"_Flight"+" (flightNumber INT,flightDate STRING, departCity STRING, arriveCity STRING, seatsAvailable INT, seatSold INT, seatPrice DOUBLE, cancelled BIT);";
         String create_Ticket_Table_stmt="CREATE TABLE "+tblName+"_Ticket"+" (ticketNumber INT,flightNumber INT, passengerName STRING, passengerSurname STRING, seatsBooked INT, amountPaid DOUBLE);";
@@ -873,7 +868,7 @@ public class TitanicBookingsServer
         {
             System.out.println("CREATE TABLE: " + err);
         }
-    }
+    }*/
     
     public void getTableNames()
     {
@@ -907,16 +902,16 @@ public class TitanicBookingsServer
             System.out.println("GET TABLE NAMES: " + err);
         }
     }
-    public void receiveTicket()
+   /* public void receiveTicket()
     {
         try
         {
             amountReads = Integer.parseInt((String)in.readObject());
             for(int i=0;i<amountReads;i++)
             {
-                t[i] = null;
-                t[i] = new Ticket();
-                t[i] = (Ticket) in.readObject();
+                ticket[i] = null;
+                ticket[i] = new Ticket();
+                ticket[i] = (Ticket) in.readObject();
             }
             txtConversation.append("Read Ticket details and wrote it to Ticket class\n");
             //out.writeObject("Read Ticket details and wrote it to Ticket class");
@@ -933,7 +928,7 @@ public class TitanicBookingsServer
                 Statement s = con.createStatement();
                 for(int i=0;i<amountReads;i++)
                 {
-                    String insert_Values_stmt="insert into "+tableName+"_Ticket values   ("+t[i].getTicketNumber()+",'"+t[i].getFlightNumber() +"','"+t[i].getPassengerName() +"','"+t[i].getPassengerSurname()+"','"+t[i].getSeatsBooked() +"','"+t[i].getAmountPaid()+ "')";
+                    String insert_Values_stmt="insert into Ticket values   ("+t[i].getTicketNumber()+",'"+t[i].getFlightNumber() +"','"+t[i].getPassengerName() +"','"+t[i].getPassengerSurname()+"','"+t[i].getSeatsBooked() +"','"+t[i].getAmountPaid()+ "')";
                     s.executeUpdate(insert_Values_stmt);
                 }
                 s.close(); // close the Statement to let the database know we're done with it
@@ -1010,7 +1005,7 @@ public class TitanicBookingsServer
         {
             System.out.println("Class not found: " + cnfe.getMessage());
         }
-    }
+    }*/
     
     public void close()
     {
