@@ -22,8 +22,11 @@ import java.sql.*;
 public class TitanicBookingsServer
 { 
     //CLASS OBJECTS
-    private Ticket[] t;
-    private Flight[] f;
+    private Ticket[] ticket;
+    private Flight[] flight;
+    private Passenger[] passenger;
+    private Receipt[] receipt;
+    private Meal[] meal;
     
     //GUI 
     private JFrame jf;
@@ -42,16 +45,26 @@ public class TitanicBookingsServer
     String msg;
     String reply;
     private String tableName;
-    private String[] columnFlight = {"flightNumber", "flightDate", "departCity", "arriveCity", "seatsAvailable", "seatPrice", "seatSold", "cancelled"};
-    private String[] columnTicket = {"ticketNumber", "flightNumber", "passengerName", "passengerSurname", "seatsBooked", "amountPaid", "seatCodes", "ticketNum"};
-    private String[] columnFlightType = {"INT", "STRING", "STRING", "STRING", "INT", "FLOAT", "INT", "BIT"};
-    private String[] columnTicketType = {"INT", "STRING", "STRING", "STRING", "INT", "FLOAT"};
-     
+    private String[] columnFlight = {"flightNumber", "flightDate", "departCity", "arriveCity", "seatsAvailable", "seatSold", "seatPrice", "cancelled"};
+    private String[] columnTicket = {"ticketNumber", "flightNumber", "seatsBooked", "amountPaid", "passengerID"};
+    private String[] columnReceipt = {"receiptID", "passengerID", "dateOfPayment", "amountPaid", "ticketNumber"};
+    private String[] columnMeal = {"mealID", "vegetarian", "chicken", "beef", "beverage", "ticketNumber"};
+    private String[] columnPassenger = {"passengerID", "pName", "pSurname", "contactNumber"};
+    private String[] columnFlightType = {"INT", "STRING", "STRING", "STRING", "INT", "INT", "FLOAT", "BIT"};
+    private String[] columnTicketType = {"INT", "INT", "INT", "Float", "INT"};
+    private String[] columnReceiptType = {"INT", "INT", "STRING", "FLOAT", "INT"};
+    private String[] columnMealType = {"INT", "BIT","BIT","BIT","BIT","INT"}; 
+    private String[] columnPassengerType = {"INT", "STRING", "STRING", "STRING"};
     
     public TitanicBookingsServer()
     {
-        f = new Flight[1000];
-        t = new Ticket[1000];
+        flight = new Flight[1000];
+        ticket = new Ticket[1000];
+        passenger = new Passenger[1000];
+        receipt = new Receipt[1000];
+        meal = new Meal[1000];
+        
+        
         amountReads = 0;
         msg = "";
         reply = "";

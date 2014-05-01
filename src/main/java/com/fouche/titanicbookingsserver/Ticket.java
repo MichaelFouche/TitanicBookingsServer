@@ -21,96 +21,83 @@ public class Ticket implements Serializable
     private String passengerName;
     private String passengerSurname;
     private int seatsBooked;
-    private double amountPaid;
+    private double  amountPaid;
+    private int passengerID;
     
     public Ticket() 
     {
         
     }
 
-    public Ticket(int ticketNumber, String passengerName, String passengerSurname, int seatsBooked, double amountPaid) {
-        this.ticketNumber = ticketNumber;
-        this.passengerName = passengerName;
-        this.passengerSurname = passengerSurname;
-        this.seatsBooked = seatsBooked;
-        this.amountPaid = amountPaid;
-    }
-
-    public Ticket(int ticketNumber, int flightNumber, String passengerName, String passengerSurname, int seatsBooked, double amountPaid) {
+    public Ticket(int ticketNumber, int flightNumber, String passengerName, String passengerSurname, int seatsBooked, double amountPaid, int passengerID) {
         this.ticketNumber = ticketNumber;
         this.flightNumber = flightNumber;
         this.passengerName = passengerName;
         this.passengerSurname = passengerSurname;
         this.seatsBooked = seatsBooked;
         this.amountPaid = amountPaid;
+        this.passengerID = passengerID;
     }
 
-    // create GET methods
-    public int getTicketNumber() 
-    {
+    public int getTicketNumber() {
         return ticketNumber;
     }
-        
-    public int getFlightNumber() 
-    {
+
+    public void setTicketNumber(int ticketNumber) {
+        this.ticketNumber = ticketNumber;
+    }
+
+    public int getFlightNumber() {
         return flightNumber;
     }
 
-    public String getPassengerName() 
-    {
-        return passengerName;
-    }
-
-    public String getPassengerSurname() 
-    {
-        return passengerSurname;
-    }
-
-    public int getSeatsBooked() 
-    {
-        return seatsBooked;
-    }
-
-    public double getAmountPaid() 
-    {
-        return amountPaid;
-    }
-
-    // create SET methods
-    public void setTicketNumber(int ticketNumber) 
-    {
-        this.ticketNumber = ticketNumber;
-    }
-    
-    public void setFlightNumber(int flightNumber) 
-    {
+    public void setFlightNumber(int flightNumber) {
         this.flightNumber = flightNumber;
     }
 
-    public void setPassengerName(String passengerName) 
-    {
+    public String getPassengerName() {
+        return passengerName;
+    }
+
+    public void setPassengerName(String passengerName) {
         this.passengerName = passengerName;
     }
 
-    public void setPassengerSurname(String passengerSurname) 
-    {
+    public String getPassengerSurname() {
+        return passengerSurname;
+    }
+
+    public void setPassengerSurname(String passengerSurname) {
         this.passengerSurname = passengerSurname;
     }
 
-    public void setSeatsBooked(int seatsBooked) 
-    {
+    public int getSeatsBooked() {
+        return seatsBooked;
+    }
+
+    public void setSeatsBooked(int seatsBooked) {
         this.seatsBooked = seatsBooked;
     }
 
-    public void setAmountPaid(double amountPaid) 
-    {
+    public double getAmountPaid() {
+        return amountPaid;
+    }
+
+    public void setAmountPaid(double amountPaid) {
         this.amountPaid = amountPaid;
     }
-    
-    // create a toString method to return the String representation of this class
-    @Override
-    public String toString() 
-    {
-        return  ticketNumber +  "#" + flightNumber + "#" +  passengerName + "#" + passengerSurname + "#" + seatsBooked + "#" + amountPaid + "\r\n";
+
+    public int getPassengerID() {
+        return passengerID;
     }
+
+    public void setPassengerID(int passengerID) {
+        this.passengerID = passengerID;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" + "ticketNumber=" + ticketNumber + ", flightNumber=" + flightNumber + ", passengerName=" + passengerName + ", passengerSurname=" + passengerSurname + ", seatsBooked=" + seatsBooked + ", amountPaid=" + amountPaid + ", passengerID=" + passengerID + '}';
+    }
+    
 }
