@@ -805,12 +805,12 @@ public class TitanicBookingsServer
             ResultSet rs = s.getResultSet(); // get any ResultSet that came from our query
             if (rs != null) // if rs == null, then there is no ResultSet to view  
             {
-                flight = new Flight[1000];
+                flight = new com.fouche.titanicbookingsserver.Flight[1000];
                 amountAllFlightsCounted = 0;
                 while (rs.next())
                 { 
                     flight[amountAllFlightsCounted] = null;
-                    flight[amountAllFlightsCounted] = new Flight();
+                    flight[amountAllFlightsCounted] = new com.fouche.titanicbookingsserver.Flight();
                     flight[amountAllFlightsCounted].setFlightNumber(rs.getInt(1));
                     flight[amountAllFlightsCounted].setFlightDate(rs.getString(2));
                     flight[amountAllFlightsCounted].setDepartCity(rs.getString(3));
@@ -834,6 +834,7 @@ public class TitanicBookingsServer
         //Send back amount of items
         try
         {
+            System.out.println("amountAllFlightsCounted");
             out.writeObject(amountAllFlightsCounted); 
             for(int i=0;i<amountAllFlightsCounted;i++)
             {
@@ -841,7 +842,7 @@ public class TitanicBookingsServer
             }            
             out.flush();
             //out.writeObject("Sent all Flights ("+amountAllFlightsCounted+")");
-            txtConversation.append("Read all flights into flight objects\nSent all Flights to client\n");
+           // txtConversation.append("Read all flights into flight objects\nSent all Flights to client\n");
             
         }
         catch (Exception err) 
