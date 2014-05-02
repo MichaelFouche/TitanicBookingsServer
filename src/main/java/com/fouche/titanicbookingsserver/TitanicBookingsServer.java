@@ -6,6 +6,7 @@
 
 package com.fouche.titanicbookingsserver;
 
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -805,12 +806,12 @@ public class TitanicBookingsServer
             ResultSet rs = s.getResultSet(); // get any ResultSet that came from our query
             if (rs != null) // if rs == null, then there is no ResultSet to view  
             {
-                flight = new com.fouche.titanicbookingsserver.Flight[1000];
+                flight = new Flight[1000];
                 amountAllFlightsCounted = 0;
                 while (rs.next())
                 { 
                     flight[amountAllFlightsCounted] = null;
-                    flight[amountAllFlightsCounted] = new com.fouche.titanicbookingsserver.Flight();
+                    flight[amountAllFlightsCounted] = new Flight();
                     flight[amountAllFlightsCounted].setFlightNumber(rs.getInt(1));
                     flight[amountAllFlightsCounted].setFlightDate(rs.getString(2));
                     flight[amountAllFlightsCounted].setDepartCity(rs.getString(3));
@@ -822,10 +823,10 @@ public class TitanicBookingsServer
                     amountAllFlightsCounted++;
                 }
             }
-            txtConversation.append("Send Flights: All Sent\n");
+            
             s.close(); // close the Statement to let the database know we're done with it
             con.close(); // close the Connection to let the database know we're done with it
-            txtConversation.append("Connection: closed\n");
+            txtConversation.append("Database Connection: closed\n");
         }
         catch (Exception err) 
         {
@@ -834,13 +835,15 @@ public class TitanicBookingsServer
         //Send back amount of items
         try
         {
-            System.out.println("amountAllFlightsCounted");
+            System.out.println("Amount Flights: "+amountAllFlightsCounted);
             out.writeObject(amountAllFlightsCounted); 
             for(int i=0;i<amountAllFlightsCounted;i++)
             {
+                System.out.println(flight[i].toString());
                 out.writeObject(flight[i]);
             }            
             out.flush();
+            txtConversation.append("Send Flights: All Sent\n");
             //out.writeObject("Sent all Flights ("+amountAllFlightsCounted+")");
            // txtConversation.append("Read all flights into flight objects\nSent all Flights to client\n");
             
@@ -1040,12 +1043,10 @@ public class TitanicBookingsServer
     {
         // Create application
         TitanicBookingsServer server = new TitanicBookingsServer();
-        System.out.println("Hello");
+        
         // Start waiting for connections
         server.createDisplay();
-        System.out.print(" World");
         server.listen();
-        System.out.print("!!");
         
     }   
     
