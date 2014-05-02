@@ -88,7 +88,7 @@ public class TitanicBookingsServer
         jf.add(jpNorth,BorderLayout.NORTH);
         jf.setSize(400,400);
         jf.pack();
-        jf.setVisible(false);        
+        jf.setVisible(true);        
         jf.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); //DISPOSE_ON_CLOSE,  DISPOSE_ON_CLOSE 
         jf.addWindowListener(new WindowAdapter() 
         {
@@ -114,6 +114,7 @@ public class TitanicBookingsServer
             out = new ObjectOutputStream(client.getOutputStream());
             out.flush();
             in = new ObjectInputStream(client.getInputStream());
+            txtConversation.append("Connection opened\n");
         }
         catch (IOException ioe)
         {
@@ -127,14 +128,14 @@ public class TitanicBookingsServer
         {
             client = listener.accept();  
             openCommunication();
-            
+            txtConversation.append("Awaiting command\n");
             while(!reply.equals("TERMINATE"))
             {
                 msg = (String)in.readObject();
                 
                 if(msg.equals("TERMINATE"))
                 {
-                    
+                    txtConversation.append("Terminate\n");
                 }
                 /*else if(msg.equals("Load Flights"))
                 {
@@ -146,48 +147,59 @@ public class TitanicBookingsServer
                 }  */              
                 else if(msg.equals("Send All Flights"))
                 {
+                    txtConversation.append("Command: Send All Flights\n");
                     sendAllFlights();
                 }
                 else if(msg.equals("Send Tickets"))
                 {
+                    txtConversation.append("Command: Send Tickets\n");
                     sendTickets();
                 }
                 else if(msg.equals("Add Flight"))
                 {
+                    txtConversation.append("Command: Add Flight\n");
                     addFlight();
                 }
                 else if(msg.equals("Add Ticket"))
                 {
+                    txtConversation.append("Command: Add Ticket\n");
                     addTicket();
                 }
                 else if(msg.equals("Delete Ticket"))
                 {
+                    txtConversation.append("Command: Delete Ticket\n");
                     deleteTicket();
                 }
                 else if(msg.equals("Delete Flight"))
                 {
+                    txtConversation.append("Command: Delete Flight\n");
                     deleteFlight();
                 }
                 else if(msg.equals("Cancel Flight"))
                 {
+                    txtConversation.append("Command: Cancel Flight\n");
                     cancelFlight();
                 }
                 else if(msg.equals("Delete all Tickets"))
                 {
+                    txtConversation.append("Command: Delete all tickets\n");
                     deleteAllTickets();
                 }
                 else if(msg.equals("Send Filtered Flights"))
                 {
+                    txtConversation.append("Command: Send Filtered Flights\n");
                     sendFilteredFlights();
                 }
             }
         }
         catch(IOException ioe)
         {
+            txtConversation.append("Exception: (commands) "+ioe.getMessage()+" \n");
             System.out.println("IO Exception (LISTEN): " + ioe.getMessage());
         }        
         catch (ClassNotFoundException cnfe)
         {
+            txtConversation.append("Exception: (commands) "+ cnfe.getMessage()+"\n");
             System.out.println("Class not found (LISTEN): " + cnfe.getMessage());
         }
     }
