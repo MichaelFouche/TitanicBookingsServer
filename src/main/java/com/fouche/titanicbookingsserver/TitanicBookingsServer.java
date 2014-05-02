@@ -721,7 +721,7 @@ public class TitanicBookingsServer
             //out.writeObject("Sent Tickets requested");
             txtConversation.append("Read Requested Tickets from database.\nStored Tickets in Ticket Objects.\nSent Tickets to client.");
             out.flush();
-            
+            txtConversation.append("Send Tickets: All Sent\n");
         }
         catch (Exception err) 
         {
@@ -822,8 +822,10 @@ public class TitanicBookingsServer
                     amountAllFlightsCounted++;
                 }
             }
+            txtConversation.append("Send Flights: All Sent\n");
             s.close(); // close the Statement to let the database know we're done with it
             con.close(); // close the Connection to let the database know we're done with it
+            txtConversation.append("Connection: closed\n");
         }
         catch (Exception err) 
         {
